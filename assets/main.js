@@ -20,25 +20,21 @@ singInBtn.addEventListener('click', () => {
 
 window.onload = function() {
 	initialize();
-	showMessage('网站全新上线～', 5000);
-	showMessage('你知道吗？我们的网站可以修复照片哦～<br />修复过程中不小心退出了？不要担心，我添加了历史记录回朔功能～<br />弹窗来自作者另一个开源项目<a href="https://notification.randallanjie.com/">R_Notification.js<br /></a>感谢使用～', 0);
+	rShowMessage('网站全新上线～',0,'up', 5000);
+	rShowMessage('你知道吗？我们的网站可以修复照片哦～<br />修复过程中不小心退出了？不要担心，我添加了历史记录回朔功能～<br />弹窗来自作者另一个开源项目<a href="https://notification.randallanjie.com/">R_Notification.js<br /></a>感谢使用～',0,'up', 0);
 	// 等到8秒后，显示提示信息
 	setTimeout(() => {
-		showMessage('PS:这些消息可以右滑删除，左滑固定嗷～', 5000);
-		showMessage('你要是觉得修复时间太长，完全可以关掉浏览器，我们会在后台继续修复，半个小时之内打开本网站就会看到结果啦～>', 5000);
+		rShowMessage('PS:这些消息可以右滑删除，左滑固定嗷～',0,'up', 5000);
+		rShowMessage('你要是觉得修复时间太长，完全可以关掉浏览器，我们会在后台继续修复，半个小时之内打开本网站就会看到结果啦～>',0,'up', 5000);
 	}, 8000);
 	setTimeout(() => {
-		showMessage('如果你想要下载修复后的图片，可以点击下载按钮哦～', 5000);
+		rShowMessage('如果你想要下载修复后的图片，可以点击下载按钮哦～',0,'up', 5000);
 	}, 16000);
 	setTimeout(() => {
-		showMessage('转接在这里祝您使用愉快～', 5000);
+		rShowMessage('转接在这里祝您使用愉快～',0,'up', 5000);
 	}, 24000);
 
 };
-
-function showMessage(message, time = 4000) {
-	rShowMessage(message,0,'up', time);
-}
 
 function errorFunction(error) {
 	localStorage.clear();
@@ -49,37 +45,7 @@ function errorFunction(error) {
 	document.getElementById('overlay').style.display = 'none'; // 隐藏灰色背景
 	document.getElementById('overlay').style.zIndex = '0';
 	// 弹窗显示错误信息
-	const popupContainer = document.querySelector('.popup-little-container');
-	const popupLittle = createPopupElement(error);
-	popupContainer.appendChild(popupLittle);
-
-	popupLittle.style.animation = 'fadeIn 1s';
-	popupLittle.style.opacity = 1;
-
-	let timer1 = setTimeout(() => { // 上移其他弹框
-		const siblingPopups = Array.from(popupContainer.children);
-		const currentIndex = siblingPopups.indexOf(popupLittle);
-		siblingPopups.slice(0, currentIndex).forEach(popupSibling => {
-			moveUpPopup(popupSibling);
-		});
-
-		popupLittle.style.animation = 'fadeOut 2s';
-		popupLittle.style.opacity = 0;
-
-		let timer2 = setTimeout(() => {
-			popupLittle.remove();
-			}, 2000);
-
-		// 取消计时器，避免内存泄漏
-		popupLittle.addEventListener('DOMNodeRemoved', () => {
-			clearTimeout(timer2);
-		});
-		}, 4000);
-
-	// 取消计时器，避免内存泄漏
-	popupLittle.addEventListener('DOMNodeRemoved', () => {
-		clearTimeout(timer1);
-	});
+	rStatusMessage.error(error.message, '出错啦～');
 }
 
 async function huiFU() {
@@ -122,7 +88,7 @@ function clearLocalStorage() {
 	// 清除randomStr和fileName中的值
 	randomStr = null;
 	fileName = null;
-	showMessage('前台清除成功～如果照片没有修复完成那么照片将在后台持续进行，您可以选择与转接联系去拿到图片～感谢使用～～～', 4000);
+	rShowMessage('前台清除成功～如果照片没有修复完成那么照片将在后台持续进行，您可以选择与转接联系去拿到图片～感谢使用～～～', 0, 'up', 4000);
 	// 清楚jquery定时器
 	clearInterval(thisInterval); // 清除轮询定时器
 	initialize();
@@ -188,29 +154,6 @@ function updateCountdown() {
 
 		document.getElementById("timer").innerHTML = "请耐心等待，预计处理剩余时间："+('0' + minutes).slice(-2) + ":" + ('0' + seconds).slice(-2);
 	}
-}
-
-function createPopupElement(text) {
-	const popupLittle = document.createElement('div');
-	popupLittle.className = 'popup-little';
-	popupLittle.textContent = text;
-	return popupLittle;
-}
-
-function moveUpPopup(popupLittle) {
-	// 获取当前弹窗的下边距值
-	const marginBottom = parseFloat(getComputedStyle(popupLittle).marginBottom);
-	// 将下边距逐渐减小以实现上移效果
-	const updatedMarginBottom = marginBottom - 20;
- 	// 使用定时器逐渐更新下边距值
-	const intervalId = setInterval(() => {
-		if (popupLittle.style.marginBottom === `${updatedMarginBottom}px`) {
-			clearInterval(intervalId);
-		} else {
-			const currentMarginBottom = parseFloat(popupLittle.style.marginBottom || marginBottom);
-			popupLittle.style.marginBottom = `${currentMarginBottom - 1}px`;
-		}
-	}, 50);
 }
 
 document.addEventListener('DOMContentLoaded', function() {

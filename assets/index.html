@@ -90,15 +90,13 @@
 				<form class="sign-up-form" style="margin: auto; padding: 20px">
 					<h2 class="form-title">关于</h2>
 					<div style="margin: auto">
-						项目说明：该项目为<a href="https://startpage.zhuanjie.ltd/" style="text-decoration: none;color: black">本人</a>毕设项目，选择图像上传后，在服务器端进行修复后展示，修复完可以点击按钮下载修复后图片。图片仅通过随机字符和文件名在30分钟内有效获取。<a href="https://console-docs.apipost.cn/preview/03ab13fb31b440dc/0ea4b49daa1e4516" style="text-decoration: none;color: black">点我去看api详情</a><br />版权申明：本项目为本人自选题目进行开发设计，设计过程、论文过程全程自行完成，无其他人帮助，如有需要请与我联系！
+						项目说明：该项目为<a href="https://startpage.zhuanjie.ltd/" style="text-decoration: none;color: black">本人</a>毕设项目，选择图像上传后，在服务器端进行修复后展示，修复完可以点击按钮下载修复后图片。图片仅通过随机字符和文件名在30分钟内有效获取。<a href="https://console-docs.apipost.cn/preview/03ab13fb31b440dc/0ea4b49daa1e4516" style="text-decoration: none;color: black">点我去看api详情</a><br />版权申明：本项目为仓库<a href="https://github.com/TencentARC/GFPGAN">GFPGAN</a>的Fork项目，项目地址为：<a href="https://github.com/RandallAnjie/GFPGAN">https://github.com/RandallAnjie/GFPGAN</a>，同时作为本人本科毕设项目，自选题目进行开发设计，设计过程、论文过程全程自行完成，无老师指导等，如有需要请与我联系！
 					</div>
 					<div>
-						<button onclick="window.location.href = 'https://startpage.zhuanjie.ltd/'" type="button" class="jump-url">个人主页</button>
-						<button onclick="window.location.href = 'https://pan.zhuanjie.ltd/'" type="button" class="jump-url">网盘</button>
-						<button onclick="window.location.href = 'https://airport.randallanjie.uk/'" type="button" class="jump-url">机场</button>
-						<button onclick="window.location.href = 'https://ai.zhuanjie.ltd/'" type="button" class="jump-url">ChatGPT</button>
-						<button onclick="window.location.href = 'https://blog.zhuanjie.ltd/'" type="button" class="jump-url">个人博客</button>
-						<button onclick="window.location.href = 'https://dash.randallanjie.uk/'" type="button" class="jump-url">服务器监控</button>
+						<button onclick="window.location.href = 'https://randallanjie.com/'" type="button" class="jump-url">个人主页</button>
+						<button onclick="window.location.href = 'https://storage.zhuanjie.ltd/'" type="button" class="jump-url">网盘</button>
+						<button onclick="window.location.href = 'https://airport.randallanjie.com/'" type="button" class="jump-url">机场</button>
+						<button onclick="window.location.href = 'https://blog.randallanjie.com/'" type="button" class="jump-url">个人博客</button>
 					</div>
 				</form>
 			</div>
@@ -118,11 +116,6 @@
 			</div>
 		</div>
 		<script src="main.js"></script>
-		<div class="footer" style="width: 100%;color: white;float: left;text-align: center;position: fixed;bottom: 0;margin-bottom: 30px;display: block; z-index: 9999">
-			<p style="text-decoration: none;color: black">© 2023 <a href="https://startpage.zhuanjie.ltd/" style="text-decoration: none;color: black">转接</a> | <a href="https://beian.miit.gov.cn/" style="text-decoration: none;color: black">京ICP备2021028872号-1</a>
-			</p>
-			<script id="LA-DATA-WIDGET" crossorigin="anonymous" charset="UTF-8" src="https://v6-widget.51.la/v6/K2N9YZVY5JOrTP8J/quote.js?theme=0&f=12&display=0,1,0,1,0,0,0,1"></script>
-		</div>
 <!--		<div id="overlay" style="display: none;"></div>-->
 		<div id="overlay">
 			<div class="popup">
@@ -131,32 +124,31 @@
 				<div class="popup_content">
 					<img src="image/spinner.gif" alt="加载中～"><p>Loading...</p>
 				</div>
-				<h2 style="padding: 20px">更新日志</h2>
-				<ul class="update_info">
-					<li class = "hot-list-item">
-						<span class = "num-top">1</span><p>23-04-18 为毕设后台创建前端</p>
-					</li>
-					<li class = "hot-list-item">
-						<span class = "num-top">2</span><p>23-04-19 修复前端逻辑</p>
-					</li>
-					<li class = "hot-list-item">
-						<span class = "num-top">3</span><p>23-04-20 优化界面风格、等待动画</p>
-					</li>
-					<li class = "hot-list-item">
-						<span class = "num-top">4</span><p>23-04-22 更新错误信息提示</p>
-					</li>
-					<li class = "hot-list-item">
-						<span class = "num-top">5</span><p>23-04-23 新增upscale参数选择</p>
-					</li>
-					<li class = "hot-list-item">
-						<span class = "num-top">6</span><p>23-04-24 新增预计等待时间(demo)</p>
-					</li>
-					<li class = "hot-list-item">
-						<span class = "num-top">7</span><p>23-04-25 新增历史（半个小时内）回朔功能</p>
-					</li>
-				</ul>
 				<button type="button" onclick="clearLocalStorage()" class="jump-url">不要这张了，我要去修复新的一张</button>
 			</div>
+		</div>
+		<div id="version-info">
+			当前版本: V1.5
+			<div class="update-details">
+				更新日志:
+				<br />
+				·V0.1 2023-04-18 为毕设后台创建前端
+				<br />
+				·V0.2 2023-04-19 修复前端逻辑
+				<br />
+				·V0.3 2023-04-20 优化界面风格、等待动画
+				<br />
+				·V0.4 2023-04-22 更新错误信息提示
+				<br />
+				·V0.5 2023-04-23 新增upscale参数选择
+				<br />
+				·V1.0 2023-04-24 新增预计等待时间(demo)
+				<br />
+				·V1.2 2023-04-25 新增历史（半个小时内）回朔功能
+				<br />
+				·V1.5 2023-11-02 重新设计弹窗，引入新的弹窗插件，修复部分bug
+			</div>
+			<div onclick="window.open('https://randallanjie.com/', '_blank');">Powered By Randall</div>
 		</div>
 	</body>
 </html>
