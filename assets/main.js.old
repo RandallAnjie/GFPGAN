@@ -1,0 +1,172 @@
+const singUpBtn = document.querySelector('#sign-up-btn')
+const singInBtn = document.querySelector('#sign-in-btn')
+const container = document.querySelector('.container')
+
+let countdownInterval;
+let endTime;
+
+singUpBtn.addEventListener('click', () => {
+	container.classList.add('sign-up-mode')
+})
+singInBtn.addEventListener('click', () => {
+	container.classList.remove('sign-up-mode')
+})
+
+
+fetch('/tongji')
+	.then(response => response.json())
+	.then(data => {
+		const number = data;
+		const numberDisplay = document.getElementById('numberDisplay');
+		numberDisplay.textContent = number;
+	})
+	.catch(error => {
+		console.error('Error fetching number:', error);
+	});
+
+function startCountDown(inputSeconds) {
+	clearInterval(countdownInterval); // Clear any existing intervals
+ 	endTime = new Date().getTime() + inputSeconds * 1000;
+	 updateCountdown();
+	 countdownInterval = setInterval(updateCountdown, 1000);
+}
+
+function updateCountdown() {
+	const currentTime = new Date().getTime();
+	const remainingTime = endTime - currentTime;
+ 	if (remainingTime <= 0) {
+		 document.getElementById("timer").innerHTML = "已超出预期时间,五分钟之内都属于正常时间,请耐心等待～";
+		 clearInterval(countdownInterval);
+	 } else {
+		 const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+		 const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+		 document.getElementById("timer").innerHTML = "请耐心等待，预计处理剩余时间："+('0' + minutes).slice(-2) + ":" + ('0' + seconds).slice(-2);
+	 }
+}
+
+function createPopupElement(text) {
+	const popupLittle = document.createElement('div');
+	popupLittle.className = 'popup-little';
+	popupLittle.textContent = text;
+	return popupLittle;
+}
+
+function moveUpPopup(popupLittle) {
+	// 获取当前弹窗的下边距值
+	const marginBottom = parseFloat(getComputedStyle(popupLittle).marginBottom);
+	// 将下边距逐渐减小以实现上移效果
+	const updatedMarginBottom = marginBottom - 20;
+ 	// 使用定时器逐渐更新下边距值
+	const intervalId = setInterval(() => {
+		if (popupLittle.style.marginBottom === `${updatedMarginBottom}px`) {
+			clearInterval(intervalId);
+		} else {
+			const currentMarginBottom = parseFloat(popupLittle.style.marginBottom || marginBottom);
+			popupLittle.style.marginBottom = `${currentMarginBottom - 1}px`;
+		}
+		}, 50);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+	document.getElementById('submit-btn')
+		.addEventListener('click', function() {
+			// 隐藏result容器
+			document.getElementById('result')
+				.style.display = 'none';
+			// 背景和loading
+			document.getElementById('overlay').style.display = 'block';
+			document.getElementById('overlay').style.zIndex = '9988';
+
+			// 获取选中的文件和版本号
+			const fileInput = document.getElementById('file-input');
+			const version = document.getElementById('version').value;
+			const upscale = document.getElementById('upscale-input').value;
+
+			// 创建一个FormData对象，并添加文件和版本信息
+			const formData = new FormData();
+			formData.append('file', fileInput.files[0]);
+			formData.append('version', version);
+			formData.append('upscale', upscale);
+
+
+			fetch('/upload', {
+					method: 'POST',
+					body: formData,
+				})
+				.then((response) => {
+					if (!response.ok) {
+						return response.text().then((errorText) => {
+							throw new Error(errorText);
+						});
+					}else{
+						return response.text();
+					}
+				})
+				.then((random_str) => {
+					const response =  fetch(`/gettime?random_str=${random_str}&file_name=${encodeURIComponent(fileInput.files[0].name)}`)
+						.then((response) => response.json())
+						.then((data) => {
+							const inputSeconds = data.seconds;
+							startCountDown(inputSeconds);
+						});
+					// 开始轮询状态，直到处理完成
+					const interval = setInterval(() => {
+						fetch(`/query?random_str=${random_str}`)
+							.then((response) => response.json())
+							.then((data) => {
+								if (data.success) {
+									// 处理完成后，显示处理前和处理后的图片，并添加下载按钮
+									document.getElementById('input-image').src = `/download?random_str=${random_str}&type=input&filename=${encodeURIComponent(fileInput.files[0].name)}`;
+									document.getElementById('output-image').src = `/download?random_str=${random_str}&type=output&filename=${encodeURIComponent(fileInput.files[0].name)}`;
+									document.getElementById('download-link').href = `/download?random_str=${random_str}&type=output&filename=${encodeURIComponent(fileInput.files[0].name)}`;
+									document.getElementById('input-form').style.display = 'none';
+									document.getElementById('result').style.display = 'inline-block';
+
+									clearInterval(interval); // 清除轮询定时器
+									document.getElementById('overlay').style.display = 'none'; // 隐藏灰色背景
+									document.getElementById('overlay').style.zIndex = '0';
+								}
+							});
+					}, 1000); // 定时1秒钟查询一次
+				})
+				.catch((error) => {
+					console.error('Error:', error);
+					document.getElementById('overlay').style.display = 'none'; // 隐藏灰色背景
+					document.getElementById('overlay').style.zIndex = '0';
+					// 弹窗显示错误信息
+					const popupContainer = document.querySelector('.popup-little-container');
+					const popupLittle = createPopupElement(error);
+					popupContainer.appendChild(popupLittle);
+
+					popupLittle.style.animation = 'fadeIn 1s';
+					popupLittle.style.opacity = 1;
+
+					let timer1 = setTimeout(() => {// 上移其他弹框
+						const siblingPopups = Array.from(popupContainer.children);
+						const currentIndex = siblingPopups.indexOf(popupLittle);
+						siblingPopups.slice(0, currentIndex).forEach(popupSibling => {
+							moveUpPopup(popupSibling);
+						});
+
+						popupLittle.style.animation = 'fadeOut 2s';
+						popupLittle.style.opacity = 0;
+
+						let timer2 = setTimeout(() => {
+							popupLittle.remove();
+						}, 2000);
+
+						// 取消计时器，避免内存泄漏
+						popupLittle.addEventListener('DOMNodeRemoved', () => {
+							clearTimeout(timer2);
+						});
+
+					}, 4000);
+
+					// 取消计时器，避免内存泄漏
+					popupLittle.addEventListener('DOMNodeRemoved', () => {
+						clearTimeout(timer1);
+					});
+				});
+		});
+});

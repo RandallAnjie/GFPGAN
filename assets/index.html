@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" href="logo.ico" type="image/x-icon">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<title>基于深度学习的照片人脸修复模型</title>
+		<link rel="stylesheet" href="style.css">
+		<script>
+			var _hmt = _hmt || [];
+			(function() {
+			  var hm = document.createElement("script");
+			  hm.src = "https://hm.baidu.com/hm.js?584909ef5ba56ab97001419569d148a5";
+			  var s = document.getElementsByTagName("script")[0];
+			  s.parentNode.insertBefore(hm, s);
+			})();
+		</script>
+		<script>
+			!function(p){"use strict";!function(t){var s=window,e=document,i=p,c="".concat("https:"===e.location.protocol?"https://":"http://","sdk.51.la/js-sdk-pro.min.js"),n=e.createElement("script"),r=e.getElementsByTagName("script")[0];n.type="text/javascript",n.setAttribute("charset","UTF-8"),n.async=!0,n.src=c,n.id="LA_COLLECT",i.d=n;var o=function(){s.LA.ids.push(i)};s.LA?s.LA.ids&&o():(s.LA=p,s.LA.ids=[],o()),r.parentNode.insertBefore(n,r)}()}({id:"K2N9YZVY5JOrTP8J",ck:"K2N9YZVY5JOrTP8J"});
+		</script>
+		<script src="https://notification.randallanjie.com/r_notification.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="form-warp">
+				<form id="input-form" class="sign-in-form">
+					<h2 class="form-title">基于深度学习的照片人脸修复模型</h2>
+					<div class="form-group">
+						<div class="form-item">
+							<p style="float: left; margin-right: auto">目前已经提供照片修复服务 </p>
+							<p id="numberDisplay" style="float: left; margin-right: auto">(获取中～)</p>
+							<p> 次～</p>
+						</div>
+						<br>
+						<div class="form-item">
+							<label for="file-input" class="custom-file-upload">
+								选择文件：
+							</label>
+							<input type="file" name="file" id="file-input">
+						</div>
+						<br>
+						<div class="form-item">
+							<label for="version">模型版本:</label>
+							<select id="version" name="version">
+								<option value="1">模型1</option>
+								<option value="1.2">模型2</option>
+								<option value="1.3" selected>模型3（默认）</option>
+								<option value="1.4">模型4</option>
+							</select>
+						</div>
+						<br>
+						<div class="form-item">
+							<label for="upscale-input" class="custom-upscale-upload">
+								upscale：
+							</label>
+							<input type="number" class="upscale-input" name="upscale-input" id="upscale-input" step="2" min="2" max="4" value="2">
+							<div class="tooltip">
+								<span class="tooltip-text">
+									upscale主要表示与图像超分辨率相关的放大因子。
+									超分辨率是一种计算机视觉任务，旨在将低分辨率图像提高到更高的分辨率，同时尽量保留更多的原始图像信息和细节。
+									换句话说，upscale表示由低分辨率图像到高分辨率图像的空间变换程度。
+									<br><br>
+									例如，如果一个方法描述为2倍超分辨率 (upscale=2)，
+									意味着最终生成的高分辨率图像的宽度和高度将分别是原始低分辨率图像的2倍。
+									同理，4倍超分辨率（upscale=4）表示高分辨率图像的尺寸是低分辨率图像的4倍。
+									通过调整upscale值，可以控制图像超分辨率的程度。
+									<br><br>
+									目前由于服务器算力问题，只开放2倍和4倍upscale
+								</span>
+								<div class="circle">
+									<span class="exclamation">!</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="submit-btn" class="submit-btn">立即修复</div>
+				</form>
+				<div id="result" class="image-container sign-in-form">
+                    <h2 class="form-title" style="text-align: center">基于深度学习的照片人脸修复模型</h2>
+					<br>
+					<img src="" id="input-image" class="img" style="flex: 1;max-width: 100%;height: auto;">
+					<img src="" id="output-image" class="img" style="flex: 1;max-width: 100%;height: auto;">
+					<br>
+					<button type="button" onclick="clearLocalStorage()" class="jump-url">再修复一张～</button>
+					<a href="" id="download-link">下载修复后图片～</a>
+				</div>
+
+				<form class="sign-up-form" style="margin: auto; padding: 20px">
+					<h2 class="form-title">关于</h2>
+					<div style="margin: auto">
+						项目说明：该项目为<a href="https://startpage.zhuanjie.ltd/" style="text-decoration: none;color: black">本人</a>毕设项目，选择图像上传后，在服务器端进行修复后展示，修复完可以点击按钮下载修复后图片。图片仅通过随机字符和文件名在30分钟内有效获取。<a href="https://console-docs.apipost.cn/preview/03ab13fb31b440dc/0ea4b49daa1e4516" style="text-decoration: none;color: black">点我去看api详情</a><br />版权申明：本项目为本人自选题目进行开发设计，设计过程、论文过程全程自行完成，无其他人帮助，如有需要请与我联系！
+					</div>
+					<div>
+						<button onclick="window.location.href = 'https://startpage.zhuanjie.ltd/'" type="button" class="jump-url">个人主页</button>
+						<button onclick="window.location.href = 'https://pan.zhuanjie.ltd/'" type="button" class="jump-url">网盘</button>
+						<button onclick="window.location.href = 'https://airport.randallanjie.uk/'" type="button" class="jump-url">机场</button>
+						<button onclick="window.location.href = 'https://ai.zhuanjie.ltd/'" type="button" class="jump-url">ChatGPT</button>
+						<button onclick="window.location.href = 'https://blog.zhuanjie.ltd/'" type="button" class="jump-url">个人博客</button>
+						<button onclick="window.location.href = 'https://dash.randallanjie.uk/'" type="button" class="jump-url">服务器监控</button>
+					</div>
+				</form>
+			</div>
+			<div class="desc-warp">
+				<div class="desc-warp-item sign-up-desc">
+					<div class="content">
+						<button id="sign-up-btn">⬅️前往关于</button>
+					</div>
+					<img src="image/log.svg" alt="">
+				</div>
+				<div class="desc-warp-item sign-in-desc">
+					<div class="content">
+						<button id="sign-in-btn">前往修复➡️</button>
+					</div>
+					<img src="image/register.svg" alt="">
+				</div>
+			</div>
+		</div>
+		<script src="main.js"></script>
+		<div class="footer" style="width: 100%;color: white;float: left;text-align: center;position: fixed;bottom: 0;margin-bottom: 30px;display: block; z-index: 9999">
+			<p style="text-decoration: none;color: black">© 2023 <a href="https://startpage.zhuanjie.ltd/" style="text-decoration: none;color: black">转接</a> | <a href="https://beian.miit.gov.cn/" style="text-decoration: none;color: black">京ICP备2021028872号-1</a>
+			</p>
+			<script id="LA-DATA-WIDGET" crossorigin="anonymous" charset="UTF-8" src="https://v6-widget.51.la/v6/K2N9YZVY5JOrTP8J/quote.js?theme=0&f=12&display=0,1,0,1,0,0,0,1"></script>
+		</div>
+<!--		<div id="overlay" style="display: none;"></div>-->
+		<div id="overlay">
+			<div class="popup">
+				<p class="popup_title" id="timer">请耐心等待，预计处理剩余时间：（获取中～）</p>
+<!--				<p id="timer">（获取中～）</p>-->
+				<div class="popup_content">
+					<img src="image/spinner.gif" alt="加载中～"><p>Loading...</p>
+				</div>
+				<h2 style="padding: 20px">更新日志</h2>
+				<ul class="update_info">
+					<li class = "hot-list-item">
+						<span class = "num-top">1</span><p>23-04-18 为毕设后台创建前端</p>
+					</li>
+					<li class = "hot-list-item">
+						<span class = "num-top">2</span><p>23-04-19 修复前端逻辑</p>
+					</li>
+					<li class = "hot-list-item">
+						<span class = "num-top">3</span><p>23-04-20 优化界面风格、等待动画</p>
+					</li>
+					<li class = "hot-list-item">
+						<span class = "num-top">4</span><p>23-04-22 更新错误信息提示</p>
+					</li>
+					<li class = "hot-list-item">
+						<span class = "num-top">5</span><p>23-04-23 新增upscale参数选择</p>
+					</li>
+					<li class = "hot-list-item">
+						<span class = "num-top">6</span><p>23-04-24 新增预计等待时间(demo)</p>
+					</li>
+					<li class = "hot-list-item">
+						<span class = "num-top">7</span><p>23-04-25 新增历史（半个小时内）回朔功能</p>
+					</li>
+				</ul>
+				<button type="button" onclick="clearLocalStorage()" class="jump-url">不要这张了，我要去修复新的一张</button>
+			</div>
+		</div>
+	</body>
+</html>

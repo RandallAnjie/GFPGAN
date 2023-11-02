@@ -5,6 +5,7 @@ results/*
 tb_logger/*
 wandb/*
 tmp/*
+img/*
 
 version.py
 
