@@ -8,7 +8,7 @@ let endTime;
 let randomStr;
 let fileName;
 
-let thisInterval;
+var thisInterval;
 
 singUpBtn.addEventListener('click', () => {
 	container.classList.add('sign-up-mode')
@@ -25,7 +25,7 @@ window.onload = function() {
 	// 等到8秒后，显示提示信息
 	setTimeout(() => {
 		rShowMessage('PS:这些消息可以右滑删除，左滑固定嗷～',0,'up', 5000);
-		rShowMessage('你要是觉得修复时间太长，完全可以关掉浏览器，我们会在后台继续修复，半个小时之内打开本网站就会看到结果啦～>',0,'up', 5000);
+		rShowMessage('你要是觉得修复时间太长，完全可以关掉浏览器，我们会在后台继续修复，半个小时之内打开本网站就会看到结果啦～',0,'up', 5000);
 	}, 8000);
 	setTimeout(() => {
 		rShowMessage('如果你想要下载修复后的图片，可以点击下载按钮哦～',0,'up', 5000);
@@ -76,6 +76,7 @@ async function huiFU() {
                 clearInterval(interval); // 清除轮询定时器
                 document.getElementById('overlay').style.display = 'none'; // 隐藏灰色背景
                 document.getElementById('overlay').style.zIndex = '0';
+				rStatusMessage.success('修复完成～');
             }
         }, 1000); // 定时1秒钟查询一次
     } catch (error) {

@@ -13,11 +13,11 @@ import os
 import torch
 from basicsr.utils import imwrite
 from mpmath import ln
+import pymysql
 
 from gfpgan import GFPGANer
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'JPG', 'jpeg', 'PNG', 'bmp'}
-
 
 def printLog(logInfo):
     print(f'{time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())} -- log : {logInfo}')
@@ -208,6 +208,9 @@ def serve_assets(path):
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    # 获取用户真实IP
+    ip = request.remote_addr
+    printLog('用户IP：' + ip)
     # 判断是否有文件上传
     if 'file' not in request.files:
         return "没有文件上传，请选择文件！", 400
